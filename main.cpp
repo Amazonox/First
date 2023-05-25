@@ -2,9 +2,9 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <math.h>
-#include "storage/mathVector.h"
-#include "storage/matrix.h"
-#include "test.h"
+#include "storage/mathVector.cpp"
+#include "storage/matrix.cpp"
+#include "test.cpp"
 using namespace std;
 
 const int WITH = 800, HEIGHT = 600;
