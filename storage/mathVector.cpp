@@ -56,4 +56,3 @@ using namespace std;
     T MathVector<T>::get(int index){
         return values[index];
     }
-}

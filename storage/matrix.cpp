@@ -76,7 +76,7 @@ template <typename T>
             }
             newValues.push_back(sum);
         }
-        return MathVector(newValues);
+        return MathVector<T>(newValues);
     }
     template <typename T>
     Matrix<T> Matrix<T>::transpose(){
