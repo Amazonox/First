@@ -4,7 +4,6 @@
 #include <math.h>
 #include "storage/mathVector.h"
 #include "storage/matrix.h"
-#include "storage/test.h"
 using namespace std;
 
 const int WITH = 2048, HEIGHT = 1024;
