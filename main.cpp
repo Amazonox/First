@@ -7,7 +7,7 @@
 #include "storage/test.h"
 using namespace std;
 
-const int WITH = 800, HEIGHT = 600;
+const int WITH = 2048, HEIGHT = 1024;
 vector<SDL_Point> koch(vector<SDL_Point> oldPoints)
 {
     vector<SDL_Point> newPoints;
@@ -19,15 +19,14 @@ vector<SDL_Point> koch(vector<SDL_Point> oldPoints)
         vec = vec * (1.0 / 3.0);
         SDL_Point p = {static_cast<int>(oldPoints[i].x + vec.get(0)), static_cast<int>(oldPoints[i].y + vec.get(1))};
         SDL_Point q = {static_cast<int>(oldPoints[i + 1].x - vec.get(0)), static_cast<int>(oldPoints[i + 1].y - vec.get(1))};
-        double norm = vec.normalise();
         Matrix<double> m{{cos(45), -sin(45)}, {sin(45), cos(45)}};
         MathVector<double> rotated = m * vec;
-        rotated = rotated * (norm);
         newPoints.push_back(p);
         newPoints.push_back({static_cast<int>(p.x + rotated.get(0)), static_cast<int>(p.y + rotated.get(1))});
         newPoints.push_back(q);
         newPoints.push_back(oldPoints[i + 1]);
     }
+    //size = (5^n*3+5)/4 
     return newPoints;
 }
 
@@ -48,9 +47,9 @@ int main(int argc, char *argv[])
 
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
-    vector<SDL_Point> x = {{200, 400}, {600, 400}};
-    vector<SDL_Point> y;
-    vector<SDL_Point> remover;
+    vector<SDL_Point> x = {{200, 400}, {1800, 400}};
+
+
 
     if (NULL == window)
     {
@@ -60,7 +59,7 @@ int main(int argc, char *argv[])
 
     SDL_Event windowEvent;
     bool quit = false;
-    while(true)
+    while(!quit)
     {
         SDL_RenderDrawLines(renderer, &x[0], x.size());
         SDL_RenderPresent(renderer);
@@ -68,20 +67,16 @@ int main(int argc, char *argv[])
         {
             if (SDL_PollEvent(&windowEvent))
             {
+                if (SDL_QUIT == windowEvent.type || (SDL_KEYDOWN == windowEvent.type && SDL_SCANCODE_ESCAPE == windowEvent.key.keysym.scancode))
+                {
+                    quit = true;
+                    break;
+                }
                 if (SDL_MOUSEBUTTONDOWN == windowEvent.type)
                 {
                     break;
                 }
-                if (SDL_QUIT == windowEvent.type)
-                {
-                    break;
-                    quit = true;
-                }
             }
-        }
-        if (quit)
-        {
-            break;
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
